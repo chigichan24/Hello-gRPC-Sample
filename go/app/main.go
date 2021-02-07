@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"crypto/sha512"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"net"
@@ -33,9 +35,21 @@ type server struct {
 func (*server) Hello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
 
 	name := req.GetName()
-	fmt.Println("return: Hello " + name + "👋")
+	fmt.Println("\nreturn: Hello " + name + "👋")
 	res := &pb.HelloResponse{
 		Hello: "Hello " + name + "👋",
+	}
+	return res, nil
+}
+
+func (*server) Crypto(ctx context.Context, req *pb.CryptoRequest) (*pb.CryptoResponse, error) {
+	raw := req.GetValue()
+	c := sha512.Sum512([]byte(raw))
+	crypted := hex.EncodeToString(c[:])
+	fmt.Println("\nraw value: " + raw)
+	fmt.Println("crypted value: " + crypted)
+	res := &pb.CryptoResponse{
+		Result: crypted,
 	}
 	return res, nil
 }

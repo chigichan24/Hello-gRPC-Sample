@@ -4,6 +4,7 @@ package pb;
 
 service HelloService {
   rpc Hello(HelloRequest) returns (HelloResponse) {}
+  rpc Crypto(CryptoRequest) returns (CryptoResponse) {}
 }
 
 message HelloRequest {
@@ -12,4 +13,12 @@ message HelloRequest {
 
 message HelloResponse {
   string hello = 1;
+}
+
+message CryptoRequest {
+  string value = 1;
+}
+
+message CryptoResponse {
+  string result = 1;
 }
