@@ -47,6 +47,8 @@ targets:
       - path: helloServiceClient
     dependencies:
       - package: RxSwift
+      - package: RxSwift
+        product: RxCocoa
       - package: Swinject
       - package: GRPC
       - package: Lottie

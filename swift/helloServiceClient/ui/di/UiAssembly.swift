@@ -5,5 +5,15 @@ final class UiAssembly: Assembly {
         container.register(TopViewController.self) { _ in
             TopViewController()
         }
+
+        container.register(WorkspaceViewModelTypes.self) { _ in
+            WorkspaceViewModel()
+        }
+
+        container.register(WorkspaceViewController.self) { _ in
+            WorkspaceViewController(
+                viewModel: container.resolve(WorkspaceViewModelTypes.self)!
+            )
+        }
     }
 }

@@ -57,7 +57,15 @@ final class TopViewController: UIViewController {
 
 extension TopViewController: LoginButtonDelegate {
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
-        print("Login Succeeded.")
+        guard let userProfile = loginResult.userProfile else {
+            return
+        }
+        let vc = WorkspaceViewController.getVC(
+            screenName: userProfile.displayName,
+            profileUrl: userProfile.pictureURLSmall
+        )
+        self.present(vc, animated: true, completion: nil)
+
     }
 
     func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError) {
