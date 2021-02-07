@@ -9,6 +9,9 @@ packages:
     GRPC:
       url: https://github.com/grpc/grpc-swift
       minorVersion: 1.0.0
+    Lottie:
+      url: https://github.com/airbnb/lottie-ios
+      minorVersion: 3.1.2
 options:
   bundleIdPrefix: net.chigita
   deploymentTarget:
@@ -30,3 +33,4 @@ targets:
       - package: RxSwift
       - package: Swinject
       - package: GRPC
+      - package: Lottie
