@@ -1,0 +1,32 @@
+name: HelloServiceClient 
+packages:
+    RxSwift:
+      url: https://github.com/ReactiveX/RxSwift
+      minorVersion: 5.1.1
+    Swinject:
+      url: https://github.com/Swinject/Swinject
+      minorVersion: 2.7.1
+    GRPC:
+      url: https://github.com/grpc/grpc-swift
+      minorVersion: 1.0.0
+options:
+  bundleIdPrefix: net.chigita
+  deploymentTarget:
+    iOS: "13.0"
+targets:
+  HelloServiceClient:
+    info:
+      path: helloServiceClient/Info.plist
+      properties:
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UILaunchStoryboardName: LaunchScreen
+    type: application
+    platform: iOS
+    deploymentTarget:
+      iOS: "13.0"
+    sources: 
+      - path: helloServiceClient
+    dependencies:
+      - package: RxSwift
+      - package: Swinject
+      - package: GRPC
