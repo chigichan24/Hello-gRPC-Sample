@@ -1,11 +1,12 @@
 import Foundation
 import UIKit
 import Lottie
+import LineSDK
 
 final class TopViewController: UIViewController {
 
     private let animationView = AnimationView()
-    private let buttonView = UIButton()
+    private let buttonView = LoginButton()
 
     override func viewDidLoad() {
         let baseView = UIView()
@@ -16,8 +17,7 @@ final class TopViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
 
         setupAnimationView()
-        setupNameFormView()
-        setupHelloText()
+        setupButtonView()
     }
 
     private func setupAnimationView() {
@@ -40,10 +40,10 @@ final class TopViewController: UIViewController {
         ].forEach { $0.isActive = true }
     }
 
-    private func setupNameFormView() {
-        buttonView.backgroundColor = .black
-        buttonView.layer.cornerRadius = 30
-        buttonView.setTitle("はじめる", for: UIControl.State.normal)
+    private func setupButtonView() {
+        buttonView.delegate = self
+        buttonView.permissions = [.profile]
+        buttonView.presentingViewController = self
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonView)
         [
@@ -51,23 +51,21 @@ final class TopViewController: UIViewController {
             buttonView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
             buttonView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
             buttonView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -60),
-            buttonView.heightAnchor.constraint(equalToConstant: 60),
         ].forEach { $0.isActive = true }
     }
+}
 
-    private func setupHelloText() {
-        let textView = UITextView()
-        textView.text = "Loading..."
-        textView.textAlignment = .center
-        textView.backgroundColor = UIColor(named: "Background")
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(textView)
-        [
-            textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            textView.bottomAnchor.constraint(equalTo: buttonView.topAnchor, constant: -10),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
-            textView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -60),
-            textView.heightAnchor.constraint(equalToConstant: 30),
-        ].forEach { $0.isActive = true }
+extension TopViewController: LoginButtonDelegate {
+    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
+        print("Login Succeeded.")
+    }
+
+    func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError) {
+        let dialog = UIAlertController(title: "ログイン失敗", message: "認証に失敗しました", preferredStyle: .alert)
+        dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(dialog, animated: true, completion: nil)
+    }
+
+    func loginButtonDidStartLogin(_ button: LoginButton) {
     }
 }

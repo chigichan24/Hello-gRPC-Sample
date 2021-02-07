@@ -12,6 +12,9 @@ packages:
     Lottie:
       url: https://github.com/airbnb/lottie-ios
       minorVersion: 3.1.2
+    LineSDK:
+      url: https://github.com/line/line-sdk-ios-swift
+      minorVersion: 5.7.0
 options:
   bundleIdPrefix: net.chigita
   deploymentTarget:
@@ -21,8 +24,21 @@ targets:
     info:
       path: helloServiceClient/Info.plist
       properties:
-        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        CFBundleURLTypes:
+          - CFBundleTypeRole: Editor
+          - CFBundleURLSchemes: [line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)]
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
         UILaunchStoryboardName: LaunchScreen
+        LSApplicationQueriesSchemes:
+            - https
+            - lineauth2
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations: 
+            UIWindowSceneSessionRoleApplication: 
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+
     type: application
     platform: iOS
     deploymentTarget:
@@ -34,3 +50,4 @@ targets:
       - package: Swinject
       - package: GRPC
       - package: Lottie
+      - package: LineSDK
