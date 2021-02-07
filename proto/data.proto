@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package sample.grpc;
-
-message User {
-  string id = 1;
-  string user_name = 10;
-  string screen_name = 20;
-}
