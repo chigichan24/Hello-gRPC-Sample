@@ -1,4 +1,4 @@
-# Hello👋 Service
+# Hello👋 Service Server
 
 ## example
 
