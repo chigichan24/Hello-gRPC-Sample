@@ -16,9 +16,8 @@ Hello-gRPC-Sample
 │   └── README.md
 ├── proto/
 │   └── HelloSrvice.proto
-├── init.sh // run protoc command
+├── Makefile // run protoc command
 └── README.md
-
 ```
 
 ## develop
