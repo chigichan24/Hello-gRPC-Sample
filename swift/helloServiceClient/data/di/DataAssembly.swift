@@ -1,6 +1,6 @@
-import Swinject
 import GRPC
 import NIO
+import Swinject
 
 final class DataAssembly: Assembly {
     func assemble(container: Container) {

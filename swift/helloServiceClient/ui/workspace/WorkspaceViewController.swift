@@ -1,15 +1,14 @@
 import Foundation
-import UIKit
-import Lottie
 import LineSDK
-import RxSwift
+import Lottie
 import RxCocoa
+import RxSwift
+import UIKit
 
 final class WorkspaceViewController: UIViewController {
-
     private let viewModel: WorkspaceViewModelTypes
-    private var screenName: String? = nil
-    private var profileUrl: URL? = nil
+    private var screenName: String?
+    private var profileUrl: URL?
 
     private let serverLabel = UITextView()
     private let serverMessage = UITextView()
@@ -42,21 +41,21 @@ final class WorkspaceViewController: UIViewController {
         baseView.backgroundColor = UIColor(named: "WorkspaceBackground")
         baseView.frame = view.frame
         baseView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(baseView)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        view.addSubview(baseView)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         setupFromServerLabel()
         setupFromServerText()
         setupInputOutput()
     }
 
     private func setupInputOutput() {
-        guard let name = self.screenName else {
+        guard let name = screenName else {
             return
         }
-        Signal<String>.just(name).emit(onNext: {[unowned self] name in
+        Signal<String>.just(name).emit(onNext: { [unowned self] name in
             self.viewModel.inputs.screenName.accept(name)
         }).disposed(by: bag)
-        self.viewModel.outputs.message.drive(serverMessage.rx.text).disposed(by: self.bag)
+        viewModel.outputs.message.drive(serverMessage.rx.text).disposed(by: bag)
     }
 
     private func setupFromServerLabel() {
@@ -72,7 +71,7 @@ final class WorkspaceViewController: UIViewController {
             serverLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
             serverLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
             serverLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -60),
-            serverLabel.heightAnchor.constraint(equalToConstant: 30)
+            serverLabel.heightAnchor.constraint(equalToConstant: 30),
         ].forEach { $0.isActive = true }
     }
 
@@ -91,7 +90,7 @@ final class WorkspaceViewController: UIViewController {
             serverMessage.topAnchor.constraint(equalTo: serverLabel.topAnchor, constant: 60),
             serverMessage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             serverMessage.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
-            serverMessage.heightAnchor.constraint(equalToConstant: 120)
+            serverMessage.heightAnchor.constraint(equalToConstant: 120),
         ].forEach { $0.isActive = true }
     }
 }

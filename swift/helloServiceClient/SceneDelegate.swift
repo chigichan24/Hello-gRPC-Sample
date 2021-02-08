@@ -1,10 +1,10 @@
-import UIKit
-import Swinject
 import LineSDK
+import Swinject
+import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         let viewController = DefaultContainer.shared.resolve(TopViewController.self)!
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    func scene(_: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         _ = LoginManager.shared.application(.shared, open: URLContexts.first?.url)
     }
 }

@@ -1,0 +1,2 @@
+excluded:
+  - helloServiceClient/data/gen

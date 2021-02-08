@@ -1,7 +1,6 @@
 import RxSwift
 
 final class ApiClientImpl: ApiClient {
-
     private let client: Pb_HelloServiceClientProtocol
 
     init(client: Pb_HelloServiceClientProtocol) {

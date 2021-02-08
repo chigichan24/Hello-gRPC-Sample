@@ -1,7 +1,6 @@
 import RxSwift
 
 final class AppRepositoryImpl: AppRepository {
-
     private let client: ApiClient
 
     init(client: ApiClient) {
@@ -9,6 +8,6 @@ final class AppRepositoryImpl: AppRepository {
     }
 
     func composeHello(name: String) -> Single<String> {
-        return self.client.sendHelloMessage(message: name)
+        return client.sendHelloMessage(message: name)
     }
 }

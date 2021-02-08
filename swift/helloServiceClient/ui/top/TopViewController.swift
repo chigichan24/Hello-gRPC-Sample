@@ -1,10 +1,9 @@
 import Foundation
-import UIKit
-import Lottie
 import LineSDK
+import Lottie
+import UIKit
 
 final class TopViewController: UIViewController {
-
     private let animationView = AnimationView()
     private let buttonView = LoginButton()
 
@@ -13,8 +12,8 @@ final class TopViewController: UIViewController {
         baseView.backgroundColor = UIColor(named: "Background")
         baseView.frame = view.frame
         baseView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(baseView)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        view.addSubview(baseView)
+        navigationController?.setNavigationBarHidden(true, animated: true)
 
         setupAnimationView()
         setupButtonView()
@@ -56,7 +55,7 @@ final class TopViewController: UIViewController {
 }
 
 extension TopViewController: LoginButtonDelegate {
-    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
+    func loginButton(_: LoginButton, didSucceedLogin loginResult: LoginResult) {
         guard let userProfile = loginResult.userProfile else {
             return
         }
@@ -64,16 +63,14 @@ extension TopViewController: LoginButtonDelegate {
             screenName: userProfile.displayName,
             profileUrl: userProfile.pictureURLSmall
         )
-        self.present(vc, animated: true, completion: nil)
-
+        present(vc, animated: true, completion: nil)
     }
 
-    func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError) {
+    func loginButton(_: LoginButton, didFailLogin _: LineSDKError) {
         let dialog = UIAlertController(title: "ログイン失敗", message: "認証に失敗しました", preferredStyle: .alert)
         dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(dialog, animated: true, completion: nil)
+        present(dialog, animated: true, completion: nil)
     }
 
-    func loginButtonDidStartLogin(_ button: LoginButton) {
-    }
+    func loginButtonDidStartLogin(_: LoginButton) {}
 }

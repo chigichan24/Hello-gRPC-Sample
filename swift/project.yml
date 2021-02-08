@@ -38,6 +38,11 @@ targets:
             UIWindowSceneSessionRoleApplication: 
               - UISceneConfigurationName: Default Configuration
                 UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+    postCompileScripts:
+      - script: mint run swiftlint autocorrect && mint run swiftlint
+        name: Swiftlint
+      - script: mint run swiftformat $SRCROOT --exclude helloServiceClient/data/gen
+        name: SwiftFormat
 
     type: application
     platform: iOS
