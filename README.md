@@ -26,12 +26,23 @@ Hello-gRPC-Sample
 ### initial
 
 ```
-chmod +x init.sh && \
-./init.sh
+make init
 ```
 
 ### update proto files
 
-1. Remove `*.pb.*` files
+```
+make update
+```
 
-2. run `./init.sh`
+#### When go files only
+
+```
+make update-go
+```
+
+#### When swift files only
+
+```
+make update-swift
+```
