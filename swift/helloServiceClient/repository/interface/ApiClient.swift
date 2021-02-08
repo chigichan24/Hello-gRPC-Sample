@@ -1,8 +1,5 @@
-//
-//  ApiClient.swift
-//  HelloServiceClient
-//
-//  Created by Kazuki Chigita on 2021/02/08.
-//
+import RxSwift
 
-import Foundation
+protocol ApiClient {
+    func sendHelloMessage(message: String) -> Single<String>
+}

@@ -20,21 +20,37 @@ final class WorkspaceViewModel: WorkspaceViewModelTypes, WorkspaceViewModelInput
 
     private let bag = DisposeBag()
 
-    var screenName = PublishRelay<String>()
-    private let screenNameDriver:  Driver<String>
-
-    let message: Driver<String> = Single.just("").asDriver(onErrorJustReturn: "error")
-
+    // inputs properties
     var inputs: WorkspaceViewModelInputs { return self }
+    var screenName = PublishRelay<String>()
+    private var screenNameDriver:  Driver<String>
+
+    // outputs properties
     var outputs: WorkspaceViewModelOutputs { return self }
+    var message: Driver<String> {
+        get {
+            messageRelay.asDriver(onErrorJustReturn: "error")
+        }
+    }
+    private let messageRelay = BehaviorRelay<String>(value: "")
 
-    init() {
+    private let repository: AppRepository
+
+    init(
+        repository: AppRepository
+    ) {
+        self.repository = repository
         screenNameDriver = screenName.asDriver(onErrorJustReturn: "error")
-        screenNameDriver.asObservable()
-            .subscribe(onNext: {name in
-                print("[debug] \(name)")
-            }).disposed(by: self.bag)
-
+        self.initOutputs()
     }
 
+    func initOutputs() {
+        self.screenNameDriver.asObservable()
+            .subscribe(onNext: {[unowned self] name in
+                repository.composeHello(name: name)
+                    .subscribe(onSuccess: { [unowned self] replay in
+                        self.messageRelay.accept(replay)
+                    }).disposed(by: self.bag)
+            }).disposed(by: self.bag)
+    }
 }

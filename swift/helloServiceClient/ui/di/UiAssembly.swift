@@ -7,7 +7,9 @@ final class UiAssembly: Assembly {
         }
 
         container.register(WorkspaceViewModelTypes.self) { _ in
-            WorkspaceViewModel()
+            WorkspaceViewModel(
+                repository: container.resolve(AppRepository.self)!
+            )
         }
 
         container.register(WorkspaceViewController.self) { _ in
